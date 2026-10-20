@@ -1,0 +1,5 @@
+const $=id=>document.getElementById(id);
+$('y').textContent=new Date().getFullYear();
+if(sessionStorage.getItem('t'))location.replace('dashboard.html');
+$('lf').addEventListener('submit',async e=>{e.preventDefault();const b=$('go');b.disabled=true;b.innerHTML='Checking credentials…';$('le').className='res';$('le').textContent='';try{const r=await api.post({action:'login',email:$('em').value.trim(),password:$('pw').value});if(!r.ok){$('le').textContent=r.error||'Unable to sign in. Check your credentials.';$('le').className='res err';return;}sessionStorage.setItem('t',r.token);location.href='dashboard.html';}catch(err){$('le').textContent='Could not connect. Please try again.';$('le').className='res err';}finally{b.disabled=false;b.innerHTML='Sign in to dashboard <span>→</span>';}});
+if(window.DEMO){const hint=document.createElement('div');hint.className='note';hint.style.marginTop='18px';hint.innerHTML='<b>Preview mode</b><br>Sample records are enabled. Use any valid email and password <code>demo</code> to explore the dashboard. Demo changes are temporary and reset when the page reloads.';$('lf').appendChild(hint);}
